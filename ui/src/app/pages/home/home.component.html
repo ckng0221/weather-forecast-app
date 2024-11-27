@@ -1,0 +1,41 @@
+<div class="">
+  <div class="mb-4">
+    @for (date of availableDates(); track $index) {
+    <button [ngClass]="date === currentDate() ? 'bg-blue-400' : 'bg-slate-300'" class="btn btn-blue  p-2 mx-1"
+      (click)="chooseDate(date)">
+      {{ date | date: 'dd MMM yyyy'}}
+    </button>
+    }
+  </div>
+  <div class=" grid grid-cols-2 gap-4">
+    <div>
+      <div class="bg-sky-200"><img src="malaysia-map.webp" alt=""></div>
+    </div>
+
+    <div class="">
+      <mat-form-field class="">
+        <input placeholder="Kuala Lumpur" matInput [(ngModel)]="searchedLocation">
+        <mat-label>Location</mat-label>
+      </mat-form-field>
+
+      @for (weather of filteredWeathers(); track $index) {
+      <mat-card appearance="outlined" class="my-2">
+        <mat-card-content>
+          <p class="font-bold">
+            {{weather.location.location_name}}
+          </p>
+          <p>
+            Max Temp: {{ weather.max_temp }} °C
+          </p>
+          <p>
+            Min Temp: {{ weather.min_temp }} °C
+          </p>
+          <p>
+            Summary: {{ weather.summary_forecast }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+      }
+    </div>
+  </div>
+</div>
