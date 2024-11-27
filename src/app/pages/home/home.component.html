@@ -1,0 +1,17 @@
+<div class="">
+  <div class="mb-4">
+    @for (date of availableDates(); track $index) {
+    <button class="btn btn-blue">
+      {{date}}
+    </button>
+    }
+  </div>
+  <div class=" grid grid-cols-2 gap-4">
+    <div class="bg-sky-200"><img src="malaysia-map.webp" alt=""></div>
+    <div class="border-2">
+      @for (weather of filteredWeathers(); track $index) {
+      <div>{{weather.location.location_name}}</div>
+      }
+    </div>
+  </div>
+</div>
