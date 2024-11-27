@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import { catchError } from 'rxjs';
 import { IWeather } from '../../model/weather.type';
 import { WeatherService } from '../../services/weather.service';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,7 @@ import { WeatherService } from '../../services/weather.service';
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
+    MatButtonToggleModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

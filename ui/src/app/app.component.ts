@@ -5,7 +5,10 @@ import { HomeComponent } from './pages/home/home.component';
 @Component({
   standalone: true,
   selector: 'app-root',
-  imports: [RouterOutlet, HomeComponent],
+  imports: [
+    // RouterOutlet,
+    HomeComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

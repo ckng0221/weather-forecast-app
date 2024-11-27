@@ -1,19 +1,24 @@
 <div class="">
   <div class="mb-4">
-    @for (date of availableDates(); track $index) {
-    <button [ngClass]="date === currentDate() ? 'bg-blue-400' : 'bg-slate-300'" class="btn btn-blue  p-2 mx-1"
-      (click)="chooseDate(date)">
-      {{ date | date: 'dd MMM yyyy'}}
-    </button>
-    }
+    <mat-button-toggle-group name="dates" [(ngModel)]="currentDate">
+      @for (date of availableDates(); track $index) {
+      <mat-button-toggle mat-raised-button [ngClass]="date === currentDate() ? 'bg-blue-400' : 'bg-slate-300'" class=""
+        (click)="chooseDate(date)" [value]="date">
+        {{ date | date: 'dd MMM yyyy'}}
+      </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
   </div>
+
   <div class=" grid grid-cols-2 gap-4">
     <div>
       <div class="bg-sky-200"><img src="malaysia-map.webp" alt=""></div>
     </div>
 
     <div class="">
-      <mat-form-field class="">
+      <div class="mb-4">
+
+      </div> <mat-form-field class="">
         <input placeholder="Kuala Lumpur" matInput [(ngModel)]="searchedLocation">
         <mat-label>Location</mat-label>
       </mat-form-field>
