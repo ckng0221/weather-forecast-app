@@ -4,70 +4,92 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'weatherTranslate',
 })
 export class WeatherTranslatePipe implements PipeTransform {
-  transform(value: any, ...args: unknown[]): unknown {
-    return translateWeather(value);
+  transform(value: any, getTag: boolean = false): unknown {
+    const [translate, tag] = translateWeather(value);
+    if (getTag) {
+      return tag;
+    }
+    return translate;
   }
 }
 
-function translateWeather(summary: string): string {
-  let translated = '';
+function translateWeather(summary: string): [string, string] {
+  let translate = '';
+  let tag = '';
 
-  switch (summary) {
-    case 'Berjerebu':
-      translated = 'Hazy';
+  switch (summary.toLowerCase()) {
+    case 'berjerebu':
+      translate = 'Hazy';
+      tag = 'sunny';
       break;
-    case 'Tiada hujan':
-      translated = 'No rain';
+    case 'tiada hujan':
+      translate = 'No rain';
+      tag = 'sunny';
       break;
-    case 'Hujan':
-      translated = 'Rain';
+    case 'hujan':
+      translate = 'Rain';
+      tag = 'rain';
       break;
-    case 'Hujan menyeluruh':
-      translated = 'Rain in all areas';
+    case 'hujan menyeluruh':
+      translate = 'Rain in all areas';
+      tag = 'rain';
       break;
-    case 'Hujan di beberapa tempat':
-      translated = 'Scattered rain';
+    case 'hujan di beberapa tempat':
+      translate = 'Scattered rain';
+      tag = 'rain';
       break;
-    case 'Hujan di satu dua tempat':
-      translated = 'Isolated rain';
+    case 'hujan di satu dua tempat':
+      translate = 'Isolated rain';
+      tag = 'rain';
       break;
-    case 'Hujan di satu dua tempat di kawasan pantai':
-      translated = 'Isoalted rain over coastal areas';
+    case 'hujan di satu dua tempat di kawasan pantai':
+      translate = 'Isoalted rain over coastal areas';
+      tag = 'rain';
       break;
-    case 'Hujan di satu dua tempat di kawasan pedalaman':
-      translated = 'Isolated rain over inland areas';
+    case 'hujan di satu dua tempat di kawasan pedalaman':
+      translate = 'Isolated rain over inland areas';
+      tag = 'rain';
       break;
-    case 'Hujan di kebanyakan tempat':
-      translated = 'Rain in most areas';
+    case 'hujan di kebanyakan tempat':
+      translate = 'Rain in most areas';
+      tag = 'rain';
       break;
-    case 'Ribut petir':
-      translated = 'Thunderstorm';
+    case 'ribut petir':
+      translate = 'Thunderstorm';
+      tag = 'thunderstorm';
       break;
-    case 'Ribut petir menyeluruh':
-      translated = 'Thunderstorm in all areas';
+    case 'ribut petir menyeluruh':
+      translate = 'Thunderstorm in all areas';
+      tag = 'thunderstorm';
       break;
-    case 'Ribut petir di kebanyakan tempat':
-      translated = 'Thunderstorm in most areas';
+    case 'ribut petir di kebanyakan tempat':
+      translate = 'Thunderstorm in most areas';
+      tag = 'thunderstorm';
       break;
-    case 'Ribut petir di beberapa tempat':
-      translated = 'Scattered thunderstorms';
+    case 'ribut petir di beberapa tempat':
+      translate = 'Scattered thunderstorms';
+      tag = 'thunderstorm';
       break;
-    case 'Ribut petir di beberapa tempat di kawasan pedalaman':
-      translated = 'Scattered thunderstorms over inland areas';
+    case 'ribut petir di beberapa tempat di kawasan pedalaman':
+      translate = 'Scattered thunderstorms over inland areas';
+      tag = 'thunderstorm';
       break;
-    case 'Ribut petir di satu dua tempat':
-      translated = 'Isolated thunderstorms';
+    case 'ribut petir di satu dua tempat':
+      translate = 'Isolated thunderstorms';
+      tag = 'thunderstorm';
       break;
-    case 'Ribut petir di satu dua tempat di kawasan pantai':
-      translated = 'Isolated thunderstorms over coastal areas.';
+    case 'ribut petir di satu dua tempat di kawasan pantai':
+      translate = 'Isolated thunderstorms over coastal areas.';
+      tag = 'thunderstorm';
       break;
-    case 'Ribut petir di satu dua tempat di kawasan pedalaman':
-      translated = 'Isolated thunderstorms over inland areas';
+    case 'ribut petir di satu dua tempat di kawasan pedalaman':
+      translate = 'Isolated thunderstorms over inland areas';
+      tag = 'thunderstorm';
       break;
 
     default:
       break;
   }
 
-  return translated;
+  return [translate, tag];
 }

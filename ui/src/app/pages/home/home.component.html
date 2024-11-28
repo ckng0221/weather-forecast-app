@@ -4,7 +4,15 @@
       @for (date of availableDates(); track $index) {
       <mat-button-toggle mat-raised-button [ngClass]="date === currentDate() ? 'bg-blue-400' : 'bg-slate-300'" class=""
         (click)="chooseDate(date)" [value]="date">
-        {{ date | date: 'dd MMM yyyy'}}
+        @if (date === todayDate) {
+        Today
+        }
+        @else {
+        {{ date | date: 'EEE'}}
+        <span class="text-gray-500">
+          {{ date | date: '(dd MMM)'}}
+        </span>
+        }
       </mat-button-toggle>
       }
     </mat-button-toggle-group>
@@ -35,11 +43,15 @@
               ( {{weather.location.location_id | weatherLocation }} )
             </p>
           </div>
+          <div class="justify-items-start grid grid-cols-8 mb-2">
+            <img alt="{{ weather.summary_forecast | weatherTranslate:true }} icon"
+              [src]="'weatherIcons/' + (weather.summary_forecast | weatherTranslate:true) + '.png'" width="30px" />
+            <div class="col-span-3">
+              {{ weather.max_temp }} °C / {{ weather.min_temp }} °C
+            </div>
+          </div>
           <p>
-            {{ weather.max_temp }} °C / {{ weather.min_temp }} °C
-          </p>
-          <p>
-            Summary: {{ weather.summary_forecast | weatherTranslate }}
+            {{ weather.summary_forecast | weatherTranslate }}
           </p>
         </mat-card-content>
       </mat-card>
