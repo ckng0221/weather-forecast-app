@@ -19,27 +19,33 @@
       <div class="mb-4">
 
       </div> <mat-form-field class="">
-        <input placeholder="Kuala Lumpur" matInput [(ngModel)]="searchedLocation">
-        <mat-label>Location</mat-label>
+        <input id="search-input" [placeholder]="currentLocation()" matInput [(ngModel)]="searchedLocation">
+        <mat-label for="search-input">Location</mat-label>
       </mat-form-field>
 
+      @if (!isLoading() && currentLocation() !== "") {
       @for (weather of filteredWeathers(); track $index) {
       <mat-card appearance="outlined" class="my-2">
         <mat-card-content>
-          <p class="font-bold">
-            {{weather.location.location_name}}
+          <div class="grid grid-cols-2">
+            <p class="font-bold">
+              {{weather.location.location_name}}
+            </p>
+            <p class="justify-self-end text-gray-500">
+              ( {{weather.location.location_id | weatherLocation }} )
+            </p>
+          </div>
+          <p>
+            {{ weather.max_temp }} °C / {{ weather.min_temp }} °C
           </p>
           <p>
-            Max Temp: {{ weather.max_temp }} °C
-          </p>
-          <p>
-            Min Temp: {{ weather.min_temp }} °C
-          </p>
-          <p>
-            Summary: {{ weather.summary_forecast }}
+            Summary: {{ weather.summary_forecast | weatherTranslate }}
           </p>
         </mat-card-content>
       </mat-card>
+      }
+      } @else {
+      <mat-spinner></mat-spinner>
       }
     </div>
   </div>

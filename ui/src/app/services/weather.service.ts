@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IWeather } from '../model/weather.type';
+import { IIpInfo, IWeather } from '../model/weather.type';
 import { environment } from '../../environments/environment.development';
 @Injectable({
   providedIn: 'root',
@@ -15,5 +15,10 @@ export class WeatherService {
   getForecasts() {
     const url = `${this.baseUrl}/weathers`;
     return this.http.get<IWeather[]>(url);
+  }
+
+  getIpInfo() {
+    const url = 'http://ipinfo.io';
+    return this.http.get<IIpInfo>(url);
   }
 }

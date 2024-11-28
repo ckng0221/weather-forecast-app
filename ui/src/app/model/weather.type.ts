@@ -14,3 +14,21 @@ export interface IWeather {
   min_temp: number;
   max_temp: number;
 }
+export interface IIpInfo {
+  ip: string;
+  city: string;
+  region: string;
+  country: string;
+  loc: string;
+  org: string;
+  postal: string;
+  timezone: string;
+}
+
+export const locationType: any = {
+  St: 'State',
+  Rc: 'Recreation Centre',
+  Ds: 'District',
+  Tn: 'Town',
+  Dv: 'Division',
+};
