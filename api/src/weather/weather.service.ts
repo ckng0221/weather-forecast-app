@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { CreateWeatherDto } from './dto/create-weather.dto';
 import { UpdateWeatherDto } from './dto/update-weather.dto';
 import { Weather } from './schemas/weather.schema';
@@ -12,22 +12,29 @@ export class WeatherService {
   ) {}
 
   create(createWeatherDto: CreateWeatherDto) {
-    return 'This action adds a new weather';
+    const createWeather = new this.weatherModel(createWeatherDto);
+
+    return createWeather.save();
   }
 
-  findAll() {
+  findAll(): any {
     return this.weatherModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} weather`;
+  findOne(id: string) {
+    try {
+      const _id = new mongoose.Types.ObjectId(id);
+      return this.weatherModel.findById(_id).exec();
+    } catch (error) {
+      throw new HttpException('Invalid ID', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
   }
 
-  update(id: number, updateWeatherDto: UpdateWeatherDto) {
-    return `This action updates a #${id} weather`;
+  update(id: string, updateWeatherDto: UpdateWeatherDto) {
+    return this.weatherModel.findByIdAndUpdate(id, updateWeatherDto).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} weather`;
+  remove(id: string) {
+    return this.weatherModel.findByIdAndDelete(id).exec();
   }
 }
