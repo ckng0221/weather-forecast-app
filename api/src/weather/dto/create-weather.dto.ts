@@ -26,7 +26,7 @@ export class CreateWeatherDto {
   afternoon_forecast: string;
 
   @ApiProperty({ example: 'Tiada Hujan' })
-  evening_forecast: string;
+  night_forecast: string;
 
   @ApiProperty({ example: 'Hujan di beberapa tempat' })
   summary_forecast: string;

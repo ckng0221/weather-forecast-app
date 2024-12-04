@@ -21,7 +21,7 @@ export class Weather {
   afternoon_forecast: string;
 
   @Prop()
-  evening_forecast: string;
+  night_forecast: string;
 
   @Prop()
   summary_forecast: string;

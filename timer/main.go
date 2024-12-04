@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"log/slog"
 	"os"
 	"timer/utils"
 
@@ -15,6 +15,11 @@ func init() {
 
 func main() {
 	job := &Job{}
+
+	if os.Getenv("DEBUG") == "1" {
+		slog.SetLogLoggerLevel(slog.LevelDebug)
+	}
+
 	c := cron.New(cron.WithSeconds())
 	if os.Getenv("ENV") == "production" {
 		// once per day
@@ -22,9 +27,11 @@ func main() {
 	} else {
 		// once per minute
 		c.AddFunc("0 * * * * *", job.main)
+
+		// c.AddFunc("*/10 * * * * *", job.main)
 	}
 	c.Start()
-	log.Println("Started cron job...")
+	slog.Info("Started cron job...")
 
 	select {}
 }
