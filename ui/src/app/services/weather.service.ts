@@ -13,7 +13,7 @@ export class WeatherService {
   constructor(private http: HttpClient) {}
 
   getForecasts() {
-    const url = `${this.baseUrl}/weathers`;
+    const url = `${this.baseUrl}/api/weathers`;
     return this.http.get<IWeather[]>(url);
   }
 
