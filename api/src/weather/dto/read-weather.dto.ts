@@ -6,7 +6,10 @@ export class ReadWeatherDto extends CreateWeatherDto {
   _id: string;
 
   @ApiProperty({ example: new Date() })
-  last_modified: Date;
+  created_at: Date;
+
+  @ApiProperty({ example: new Date() })
+  updated_at: Date;
 
   @ApiProperty({ example: 1 })
   version: number;

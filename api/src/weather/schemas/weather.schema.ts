@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ILocation } from '../dto/create-weather.dto';
 
-// TODO: use timer job to update
-@Schema()
+@Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 export class Weather {
   @Prop({
     type: {
@@ -35,9 +34,6 @@ export class Weather {
 
   @Prop()
   min_temp: number;
-
-  @Prop({ default: new Date() })
-  last_modified: Date;
 
   @Prop({ default: 1 })
   version: number;
