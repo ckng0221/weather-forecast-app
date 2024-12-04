@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateWeatherDto } from './create-weather.dto';
+import { ReadWeatherDto } from './read-weather.dto';
 
-export class UpdateWeatherDto extends PartialType(CreateWeatherDto) {}
+export class UpdateWeatherDto extends PartialType(ReadWeatherDto) {}

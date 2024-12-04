@@ -14,10 +14,10 @@ export class CreateWeatherDto {
       },
     },
   })
-  location: Record<string, any>;
+  location: ILocation;
 
-  @ApiProperty({ example: '2024-01-01' })
-  date: string;
+  @ApiProperty({ example: new Date('2024-01-01') })
+  date: Date;
 
   @ApiProperty({ example: 'Hujan di beberapa tempat' })
   morning_forecast: string;
