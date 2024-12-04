@@ -1,11 +1,13 @@
-import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import type { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as morgan from 'morgan';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const PORT = 8000;
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const configService = app.get(ConfigService);
 
@@ -21,10 +23,16 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, documentFactory);
 
+  // logging
+  const loggingMode =
+    process.env.NODE_ENV === 'production' ? 'combined' : 'dev';
+  app.use(morgan(loggingMode));
+
   // Cors
   const allowedOrigin = configService.get('FRONTEND_HOST');
   app.enableCors({ origin: allowedOrigin });
 
+  app.disable('x-powered-by');
   await app.listen(PORT);
 }
 bootstrap();

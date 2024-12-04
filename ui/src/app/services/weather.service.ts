@@ -14,7 +14,12 @@ export class WeatherService {
 
   getForecasts() {
     const url = `${this.baseUrl}/api/weathers`;
-    return this.http.get<IWeather[]>(url);
+
+    return this.http.get<IWeather[]>(url, {
+      params: {
+        startDate: new Date().toDateString(),
+      },
+    });
   }
 
   getIpInfo() {
