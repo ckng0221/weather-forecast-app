@@ -51,8 +51,7 @@ export class WeatherService {
         const _id = result._id;
         const dto: UpdateWeatherDto = createWeatherDto;
         dto.version = result.version + 1;
-        dto.last_modified = new Date();
-        this.weatherModel.findByIdAndUpdate(_id, dto).exec();
+        return this.weatherModel.findByIdAndUpdate(_id, dto).exec();
       }
     }
   }

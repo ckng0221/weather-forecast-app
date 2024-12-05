@@ -58,14 +58,14 @@ export class HomeComponent {
   filteredWeathers: Signal<IWeather[]> = computed(() => {
     return this.weathers().filter(
       (weather) =>
-        weather.date === this.currentDate() &&
+        weather.date.slice(0, 10) === this.currentDate() &&
         weather.location.location_name
           .toLowerCase()
           .includes(this.searchedLocation().toLowerCase())
     );
   });
   availableDates: Signal<string[]> = computed(() => {
-    const dates = this.weathers().map((weather) => weather.date);
+    const dates = this.weathers().map((weather) => weather.date.slice(0, 10));
     return [...new Set(dates)].sort();
   });
 
