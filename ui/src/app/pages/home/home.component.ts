@@ -22,7 +22,6 @@ import { IWeather } from '../../model/weather.type';
 import { WeatherLocationPipe } from '../../pipes/weather-location.pipe';
 import { WeatherTranslatePipe } from '../../pipes/weather-translate.pipe';
 import { WeatherService } from '../../services/weather.service';
-import { LocationComponent } from '../location/location.component';
 
 @Component({
   selector: 'app-home',

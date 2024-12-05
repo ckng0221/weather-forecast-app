@@ -4,12 +4,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IWeather } from '../../model/weather.type';
 import { WeatherLocationPipe } from '../../pipes/weather-location.pipe';
 import { WeatherTranslatePipe } from '../../pipes/weather-translate.pipe';
 import { WeatherService } from '../../services/weather.service';
 import { Location } from '@angular/common';
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  SafeUrl,
+} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-location',
@@ -28,12 +33,18 @@ import { Location } from '@angular/common';
 export class LocationComponent {
   constructor(private route: ActivatedRoute, private _location: Location) {}
   weatherService = inject(WeatherService);
+  sanitizer = inject(DomSanitizer);
+  router = inject(Router);
 
   identifier: string | null = '';
   todayDate = new Date().toISOString().slice(0, 10);
+  safeUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
 
   weather: WritableSignal<IWeather> = signal({
-    location: { location_id: '', location_name: '' },
+    location: {
+      location_id: '',
+      location_name: '',
+    },
     morning_forecast: '',
     afternoon_forecast: '',
     night_forecast: '',
@@ -52,12 +63,18 @@ export class LocationComponent {
           .getForecasts({ identifier: this.identifier })
           .subscribe((weathers) => {
             this.weather.set(weathers[0]);
+            this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+              'https://maps.google.com/maps/?q=' +
+                this.weather().location.location_name +
+                '&output=embed'
+            );
           });
       }
     });
   }
 
   clickBack() {
-    this._location.back();
+    // this._location.back();
+    this.router.navigate(['/']);
   }
 }
