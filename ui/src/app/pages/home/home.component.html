@@ -1,5 +1,5 @@
 <div class="">
-  <div class="mb-4">
+  <div class="mb-4 md:visible invisible">
     <mat-button-toggle-group name="dates" [(ngModel)]="currentDate">
       @for (date of availableDates(); track $index) {
       <mat-button-toggle mat-raised-button [ngClass]="date === currentDate() ? 'bg-blue-400' : 'bg-slate-300'" class=""
@@ -9,7 +9,7 @@
         }
         @else {
         {{ date | date: 'EEE'}}
-        <span class="text-gray-500">
+        <span class="text-gray-500 text-sx">
           {{ date | date: '(dd MMM)'}}
         </span>
         }
@@ -17,12 +17,27 @@
       }
     </mat-button-toggle-group>
   </div>
+  <div class="mb-4 visible md:invisible">
+    <mat-button-toggle-group name="dates" [(ngModel)]="currentDate">
+      @for (date of availableDates(); track $index) {
+      <mat-button-toggle mat-raised-button [ngClass]="date === currentDate() ? 'bg-blue-400' : 'bg-slate-300'" class=""
+        (click)="chooseDate(date)" [value]="date">
+        @if (date === todayDate) {
+        Today
+        }
+        @else {
+        {{ date | date: 'EEE'}}
+        }
+      </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  </div>
 
-  <div class=" grid grid-cols-2 gap-4">
+  <div class=" grid lg:grid-cols-2 gap-4">
     <div>
       <div class="p-4 pl-8">
 
-        <iframe width=450 height=450 src="https://maps.google.com/maps?q=Malaysia&amp;output=embed"
+        <iframe width="100%" height=400 src="https://maps.google.com/maps?q=Malaysia&amp;output=embed"
           title="Malaysia"></iframe>
         <!-- <img src="malaysia-map.webp" alt=""> -->
       </div>

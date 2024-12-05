@@ -1,5 +1,5 @@
-<div class="px-16">
-  <mat-card appearance="outlined" class="my-2 px-8">
+<div class="lg:px-16">
+  <mat-card appearance="outlined" class="my-2 lg:px-8">
     <mat-card-content class="">
       <div class="mb-4">
         <button mat-mini-fab (click)="clickBack()">
@@ -75,7 +75,7 @@
         </div>
         <hr />
       </div>
-      <iframe width=450 height=450 [src]="safeUrl" [title]="weather().location.location_name"></iframe>
+      <iframe [src]="safeUrl" width="90%" height="300" [title]="weather().location.location_name"></iframe>
     </mat-card-content>
   </mat-card>
 </div>
