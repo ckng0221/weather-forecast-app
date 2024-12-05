@@ -54,6 +54,14 @@ function translateWeather(summary: string): [string, string] {
       translate = 'Rain in most areas';
       tag = 'rain';
       break;
+    case 'hujan di beberapa tempat di kawasan pedalaman':
+      translate = 'Rain some areas over inland areas';
+      tag = 'rain';
+      break;
+    case 'hujan di kebanyakan tempat di kawasan pedalaman':
+      translate = 'Rain most areas over inland areas';
+      tag = 'rain';
+      break;
     case 'ribut petir':
       translate = 'Thunderstorm';
       tag = 'thunderstorm';
@@ -64,6 +72,14 @@ function translateWeather(summary: string): [string, string] {
       break;
     case 'ribut petir di kebanyakan tempat':
       translate = 'Thunderstorm in most areas';
+      tag = 'thunderstorm';
+      break;
+    case 'ribut petir di kawasan pedalaman':
+      translate = 'Thunderstorms over inland areas';
+      tag = 'thunderstorm';
+      break;
+    case 'ribut petir menyeluruh di kawasan pedalaman':
+      translate = 'Thunderstorms in all inland areas';
       tag = 'thunderstorm';
       break;
     case 'ribut petir di beberapa tempat':
@@ -84,6 +100,10 @@ function translateWeather(summary: string): [string, string] {
       break;
     case 'ribut petir di satu dua tempat di kawasan pedalaman':
       translate = 'Isolated thunderstorms over inland areas';
+      tag = 'thunderstorm';
+      break;
+    case 'ribut petir di kebanyakan tempat di kawasan pedalaman':
+      translate = 'Thunderstorms in most places over inland areas';
       tag = 'thunderstorm';
       break;
 

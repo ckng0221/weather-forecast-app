@@ -89,7 +89,9 @@ export class WeatherService {
     if (query.locationName) {
       searchQuery = {
         ...searchQuery,
-        'location.location_name': query.locationName,
+        'location.location_name': {
+          $regex: new RegExp(query.locationName, 'i'),
+        },
       };
     }
 

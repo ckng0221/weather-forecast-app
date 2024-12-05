@@ -3,9 +3,7 @@ import {
   Component,
   computed,
   inject,
-  Input,
   input,
-  OnChanges,
   signal,
   Signal,
   SimpleChanges,
@@ -21,9 +19,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import dayjs from 'dayjs';
 import { catchError } from 'rxjs';
 import { IWeather } from '../../model/weather.type';
-import { WeatherService } from '../../services/weather.service';
 import { WeatherLocationPipe } from '../../pipes/weather-location.pipe';
 import { WeatherTranslatePipe } from '../../pipes/weather-translate.pipe';
+import { WeatherService } from '../../services/weather.service';
 
 @Component({
   selector: 'app-home',
@@ -45,9 +43,15 @@ import { WeatherTranslatePipe } from '../../pipes/weather-translate.pipe';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  weatherService = inject(WeatherService);
+  private weatherService = inject(WeatherService);
+  constructor() {
+    this.weatherService.getCurrentLocation.subscribe((location) => {
+      this.searchedLocation.set(location);
+      this.currentLocation.set(location);
+    });
+  }
 
-  currentLocation = input('');
+  currentLocation = signal('');
 
   todayDate = dayjs().format('YYYY-MM-DD');
   currentDate: WritableSignal<string> = signal(this.todayDate);
