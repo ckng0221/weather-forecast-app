@@ -39,6 +39,7 @@ export class WeatherController {
     description: 'Only search based on unique identifier',
   })
   @ApiQuery({ name: 'locationName', example: 'Langkawi', required: false })
+  @ApiQuery({ name: 'locationId', example: 'Ds001', required: false })
   @ApiQuery({ name: 'endDate', example: '2024-12-31', required: false })
   @ApiQuery({ name: 'startDate', example: '2024-01-01', required: false })
   findAll(@Query() query: WeatherQuery): Promise<ReadWeatherDto[]> {

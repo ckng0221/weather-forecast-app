@@ -18,6 +18,7 @@ export class ReadWeatherDto extends CreateWeatherDto {
 export interface WeatherQuery {
   startDate: Date;
   endDate: Date;
+  locationId: string;
   locationName: string;
   identifier: string;
 }

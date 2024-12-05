@@ -86,7 +86,14 @@ export class WeatherService {
       };
     }
 
-    if (query.locationName) {
+    if (query.locationId) {
+      searchQuery = {
+        ...searchQuery,
+        'location.location_id': {
+          $regex: new RegExp(query.locationId, 'i'),
+        },
+      };
+    } else if (query.locationName) {
       searchQuery = {
         ...searchQuery,
         'location.location_name': {

@@ -33,28 +33,30 @@
 
       @if (!isLoading() && currentLocation() !== "") {
       @for (weather of filteredWeathers(); track $index) {
-      <mat-card appearance="outlined" class="my-2">
-        <mat-card-content>
-          <div class="grid grid-cols-2">
-            <p class="font-bold">
-              {{weather.location.location_name}}
-            </p>
-            <p class="justify-self-end text-gray-500">
-              ( {{weather.location.location_id | weatherLocation }} )
-            </p>
-          </div>
-          <div class="justify-items-start grid grid-cols-8 mb-2">
-            <img alt="{{ weather.summary_forecast | weatherTranslate:true }} icon"
-              [src]="'weatherIcons/' + (weather.summary_forecast | weatherTranslate:true) + '.png'" width="30px" />
-            <div class="col-span-3">
-              {{ weather.max_temp }} °C / {{ weather.min_temp }} °C
+      <a routerLink="locations/{{weather.date.slice(0, 10)}}_{{weather.location.location_id}}">
+        <mat-card appearance="outlined" class="my-2">
+          <mat-card-content>
+            <div class="grid grid-cols-2">
+              <p class="font-bold">
+                {{weather.location.location_name}}
+              </p>
+              <p class="justify-self-end text-gray-500">
+                ( {{weather.location.location_id | weatherLocation }} )
+              </p>
             </div>
-          </div>
-          <p>
-            {{ weather.summary_forecast | weatherTranslate }}
-          </p>
-        </mat-card-content>
-      </mat-card>
+            <div class="justify-items-start grid grid-cols-8 mb-2">
+              <img alt="{{ weather.summary_forecast | weatherTranslate:true }} icon"
+                [src]="'weatherIcons/' + (weather.summary_forecast | weatherTranslate:true) + '.png'" width="30px" />
+              <div class="col-span-3">
+                {{ weather.max_temp }} °C / {{ weather.min_temp }} °C
+              </div>
+            </div>
+            <p>
+              {{ weather.summary_forecast | weatherTranslate }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </a>
       }
       } @else {
       <mat-spinner></mat-spinner>

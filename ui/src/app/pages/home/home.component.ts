@@ -3,7 +3,6 @@ import {
   Component,
   computed,
   inject,
-  input,
   signal,
   Signal,
   SimpleChanges,
@@ -16,12 +15,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterLink } from '@angular/router';
 import dayjs from 'dayjs';
 import { catchError } from 'rxjs';
 import { IWeather } from '../../model/weather.type';
 import { WeatherLocationPipe } from '../../pipes/weather-location.pipe';
 import { WeatherTranslatePipe } from '../../pipes/weather-translate.pipe';
 import { WeatherService } from '../../services/weather.service';
+import { LocationComponent } from '../location/location.component';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,7 @@ import { WeatherService } from '../../services/weather.service';
     MatProgressSpinnerModule,
     WeatherLocationPipe,
     WeatherTranslatePipe,
+    RouterLink,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

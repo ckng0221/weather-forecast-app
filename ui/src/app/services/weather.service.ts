@@ -29,14 +29,33 @@ export class WeatherService {
       });
   }
 
-  getForecasts() {
+  getForecasts(
+    options: {
+      identifier?: string;
+      location_id?: string;
+      location_name?: string;
+    } = {
+      identifier: '',
+      location_id: '',
+      location_name: '',
+    }
+  ) {
     const url = `${this.baseUrl}/api/weathers`;
 
-    return this.http.get<IWeather[]>(url, {
-      params: {
-        startDate: new Date().toDateString(),
-      },
-    });
+    let params = {};
+    params = { ...params, startDate: new Date().toDateString() };
+    if (options.identifier) {
+      params = { ...params, identifier: options.identifier };
+    } else if (options.location_id) {
+      params = { ...params, locationId: options.location_id };
+    } else if (options.location_name) {
+      params = { ...params, locationName: options.location_name };
+    }
+
+    const httpOptions = {
+      params,
+    };
+    return this.http.get<IWeather[]>(url, httpOptions);
   }
 
   getIpInfo() {

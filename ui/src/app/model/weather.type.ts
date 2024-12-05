@@ -8,7 +8,7 @@ export interface IWeather {
   date: string;
   morning_forecast: string;
   afternoon_forecast: string;
-  evening_forecast: string;
+  night_forecast: string;
   summary_forecast: string;
   summary_when: string;
   min_temp: number;

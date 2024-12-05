@@ -1,4 +1,80 @@
-<div>
-  <p>location works!</p>
-  {{ location }}
+<div class="px-16">
+  <mat-card appearance="outlined" class="my-2 px-8">
+    <mat-card-content class="">
+      <div class="mb-4">
+        <button mat-mini-fab (click)="clickBack()">
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+      </div>
+      <div class="grid grid-cols-2">
+        <p class="font-bold">
+          {{weather().date | date:'EEE dd'}}
+          @if(weather().date.slice(0, 10) === todayDate ) {
+          (Today)
+          }
+        </p>
+        <span class="justify-self-end">
+          <p class="font-bold">
+            {{weather().location.location_name}}
+          </p>
+          <p class="text-gray-500">
+            ( {{weather().location.location_id | weatherLocation }} )
+          </p>
+        </span>
+      </div>
+      <div class="col-span-3 mb-8">
+        {{ weather().max_temp }} °C / {{ weather().min_temp }} °C
+      </div>
+
+
+      <!-- Morning -->
+      <div class="my-4">
+        <div class="my-4">
+          <p class="mb-4">
+            Morning
+          </p>
+          <div class="grid grid-cols-12">
+            <img alt="{{ weather().morning_forecast | weatherTranslate:true }} icon"
+              [src]="'weatherIcons/' + (weather().morning_forecast | weatherTranslate:true) + '.png'" width="30px" />
+            <p class="col-span-4">
+              {{ weather().morning_forecast | weatherTranslate }}
+            </p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <!-- Afternoon -->
+      <div class="my-4">
+        <div class="my-4">
+          <p class="mb-4">
+            Afternoon
+          </p>
+          <div class="grid grid-cols-12">
+            <img alt="{{ weather().afternoon_forecast | weatherTranslate:true }} icon"
+              [src]="'weatherIcons/' + (weather().afternoon_forecast | weatherTranslate:true) + '.png'" width="30px" />
+            <p class="col-span-4">
+              {{ weather().afternoon_forecast | weatherTranslate }}
+            </p>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <!-- Night -->
+      <div class="my-4">
+        <div class="my-4">
+          <p class="mb-4">
+            Night
+          </p>
+          <div class="grid grid-cols-12">
+            <img alt="{{ weather().night_forecast | weatherTranslate:true }} icon" [src]="'weatherIcons/' + ((weather().night_forecast | weatherTranslate:true) === 'sunny' ? 'moon' : weather().night_forecast | weatherTranslate:true )
+              + '.png'" width=" 30px" />
+            <p class="col-span-4">
+              {{ weather().night_forecast | weatherTranslate }}
+            </p>
+          </div>
+        </div>
+        <hr />
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
