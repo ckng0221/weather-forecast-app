@@ -1,20 +1,16 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatebarComponent } from '../../components/datebar/datebar.component';
 import { IWeather } from '../../model/weather.type';
 import { WeatherLocationPipe } from '../../pipes/weather-location.pipe';
 import { WeatherTranslatePipe } from '../../pipes/weather-translate.pipe';
 import { WeatherService } from '../../services/weather.service';
-import { Location } from '@angular/common';
-import {
-  DomSanitizer,
-  SafeResourceUrl,
-  SafeUrl,
-} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-location',
@@ -26,12 +22,28 @@ import {
     DatePipe,
     MatIconModule,
     MatButtonModule,
+    DatebarComponent,
   ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.css',
 })
 export class LocationComponent {
-  constructor(private route: ActivatedRoute, private _location: Location) {}
+  constructor(private route: ActivatedRoute, private _location: Location) {
+    this.route.paramMap.subscribe((paramMap) => {
+      this.identifier = paramMap.get('identifier');
+      if (this.identifier) {
+        this.weatherService
+          .getForecasts({ identifier: this.identifier })
+          .subscribe((weathers) => {
+            this.weather.set(weathers[0]);
+            const location = this.weather().location.location_name;
+            this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+              'https://maps.google.com/maps/?q=' + location + '&output=embed'
+            );
+          });
+      }
+    });
+  }
   weatherService = inject(WeatherService);
   sanitizer = inject(DomSanitizer);
   router = inject(Router);
@@ -55,26 +67,15 @@ export class LocationComponent {
     max_temp: 0,
   });
 
-  ngOnInit() {
-    this.route.paramMap.subscribe((paramMap) => {
-      this.identifier = paramMap.get('identifier');
-      if (this.identifier) {
-        this.weatherService
-          .getForecasts({ identifier: this.identifier })
-          .subscribe((weathers) => {
-            this.weather.set(weathers[0]);
-            this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-              'https://maps.google.com/maps/?q=' +
-                this.weather().location.location_name +
-                '&output=embed'
-            );
-          });
-      }
-    });
-  }
+  ngOnInit() {}
 
   clickBack() {
-    // this._location.back();
-    this.router.navigate(['/']);
+    this._location.back();
+    // this.router.navigate(['/']);
+  }
+
+  changeDate(date: string) {
+    const newIdentifier = `${date}_${this.identifier?.slice(11)}`;
+    this.router.navigate([`/locations/${newIdentifier}`]);
   }
 }
