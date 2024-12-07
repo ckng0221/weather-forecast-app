@@ -1,0 +1,35 @@
+<div>
+  <div class="md:mb-2 md:visible collapse">
+    <mat-button-toggle-group name="dates" [(ngModel)]="currentDate">
+      @for (date of availableDates; track $index) {
+      <mat-button-toggle mat-raised-button [ngClass]="date === currentDate() ? 'bg-blue-400' : 'bg-slate-300'" class=""
+        (click)="chooseDate(date)" [value]="date">
+        @if (date === todayDate) {
+        Today
+        }
+        @else {
+        {{ date | date: 'EEE'}}
+        <span class="text-gray-500 text-sx">
+          {{ date | date: '(dd MMM)'}}
+        </span>
+        }
+      </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  </div>
+  <div class="mb-2 visible md:collapse md:mb-0">
+    <mat-button-toggle-group name="dates" [(ngModel)]="currentDate">
+      @for (date of availableDates; track $index) {
+      <mat-button-toggle mat-raised-button [ngClass]="date === currentDate() ? 'bg-blue-400' : 'bg-slate-300'" class=""
+        (click)="chooseDate(date)" [value]="date">
+        @if (date === todayDate) {
+        Today
+        }
+        @else {
+        {{ date | date: 'EEE'}}
+        }
+      </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  </div>
+</div>

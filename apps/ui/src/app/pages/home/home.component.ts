@@ -1,7 +1,7 @@
-import { DatePipe, NgClass } from '@angular/common';
 import {
   Component,
   computed,
+  effect,
   inject,
   signal,
   Signal,
@@ -15,13 +15,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import dayjs from 'dayjs';
 import { catchError } from 'rxjs';
 import { IWeather } from '../../model/weather.type';
 import { WeatherLocationPipe } from '../../pipes/weather-location.pipe';
 import { WeatherTranslatePipe } from '../../pipes/weather-translate.pipe';
 import { WeatherService } from '../../services/weather.service';
+import { DatebarComponent } from '../../components/datebar/datebar.component';
+import { DateService } from '../../services/date.service';
 
 @Component({
   selector: 'app-home',
@@ -29,33 +31,50 @@ import { WeatherService } from '../../services/weather.service';
   imports: [
     MatButtonModule,
     MatCardModule,
-    NgClass,
-    DatePipe,
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
     MatButtonToggleModule,
     MatProgressSpinnerModule,
+    RouterLink,
     WeatherLocationPipe,
     WeatherTranslatePipe,
-    RouterLink,
+    DatebarComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
+  private dateService = inject(DateService);
   private weatherService = inject(WeatherService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   constructor() {
     this.weatherService.getCurrentLocation.subscribe((location) => {
-      this.searchedLocation.set(location);
+      if (!this.searchedLocation()) {
+        this.searchedLocation.set(location);
+      }
       this.currentLocation.set(location);
+    });
+
+    effect(() => {
+      // update query parameters on search
+      const queryParams = { location: this.searchedLocation() };
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams,
+        queryParamsHandling: 'merge',
+      });
     });
   }
 
   currentLocation = signal('');
 
   todayDate = dayjs().format('YYYY-MM-DD');
-  currentDate: WritableSignal<string> = signal(this.todayDate);
+  currentDate: WritableSignal<string> = signal(
+    this.dateService.getCurrentDate()
+  );
   weathers: WritableSignal<IWeather[]> = signal([]);
   searchedLocation: WritableSignal<string> = signal(this.currentLocation());
   isLoading = signal(true);
@@ -68,10 +87,6 @@ export class HomeComponent {
           .toLowerCase()
           .includes(this.searchedLocation().toLowerCase())
     );
-  });
-  availableDates: Signal<string[]> = computed(() => {
-    const dates = this.weathers().map((weather) => weather.date.slice(0, 10));
-    return [...new Set(dates)].sort();
   });
 
   ngOnInit(): void {
@@ -87,13 +102,23 @@ export class HomeComponent {
         this.weathers.set(weathers);
         this.isLoading.set(false);
       });
+
+    // Get query parameter
+    this.route.queryParams.subscribe((params) => {
+      const searchedLocation = params['location'];
+
+      if (searchedLocation) {
+        this.searchedLocation.set(searchedLocation);
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     this.searchedLocation.set(this.currentLocation());
+    console.log(this.searchedLocation);
   }
 
-  chooseDate(date: string) {
+  changeDate(date: string) {
     this.currentDate.set(date);
   }
 }
