@@ -38,12 +38,16 @@ function translateWeather(summary: string): [string, string] {
       translate = 'Scattered rain';
       tag = 'rain';
       break;
+    case 'hujan di kebanyakan tempat di kawasan pantai':
+      translate = 'Rain in most areas over coastal areas';
+      tag = 'rain';
+      break;
     case 'hujan di satu dua tempat':
       translate = 'Isolated rain';
       tag = 'rain';
       break;
     case 'hujan di satu dua tempat di kawasan pantai':
-      translate = 'Isoalted rain over coastal areas';
+      translate = 'Isolated rain over coastal areas';
       tag = 'rain';
       break;
     case 'hujan di satu dua tempat di kawasan pedalaman':
