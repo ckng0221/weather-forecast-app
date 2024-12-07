@@ -84,6 +84,14 @@ export class WeatherService {
           $lte: new Date(endDate),
         },
       };
+    } else {
+      // Default today onwards only, if without query
+      searchQuery = {
+        ...searchQuery,
+        date: {
+          $gte: new Date().toISOString().slice(0, 10),
+        },
+      };
     }
 
     if (query.locationId) {

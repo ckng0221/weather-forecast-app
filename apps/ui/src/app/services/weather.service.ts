@@ -7,7 +7,6 @@ import { BehaviorSubject, catchError } from 'rxjs';
   providedIn: 'root',
 })
 export class WeatherService {
-  // private baseUrl: string = 'https://api.data.gov.my';
   private baseUrl: string = environment.apiBaseUrl;
   private currentLocation = new BehaviorSubject('');
   getCurrentLocation = this.currentLocation.asObservable();
@@ -34,22 +33,33 @@ export class WeatherService {
       identifier?: string;
       location_id?: string;
       location_name?: string;
+      start_date?: string;
+      end_date?: string;
     } = {
       identifier: '',
       location_id: '',
       location_name: '',
+      start_date: '',
+      end_date: '',
     }
   ) {
     const url = `${this.baseUrl}/api/weathers`;
 
     let params = {};
-    params = { ...params, startDate: new Date().toDateString() };
+    params = { ...params };
     if (options.identifier) {
       params = { ...params, identifier: options.identifier };
     } else if (options.location_id) {
       params = { ...params, locationId: options.location_id };
     } else if (options.location_name) {
       params = { ...params, locationName: options.location_name };
+    }
+
+    if (options.start_date) {
+      params = { ...params, start_date: options.start_date };
+    }
+    if (options.end_date) {
+      params = { ...params, end_date: options.end_date };
     }
 
     const httpOptions = {
