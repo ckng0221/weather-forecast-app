@@ -1,3 +1,4 @@
+import { CacheInterceptor } from '@nestjs/cache-manager';
 import {
   Body,
   Controller,
@@ -10,14 +11,16 @@ import {
   Post,
   Put,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
+import { ApiQuery } from '@nestjs/swagger';
 import { CreateWeatherDto } from './dto/create-weather.dto';
 import { ReadWeatherDto, WeatherQuery } from './dto/read-weather.dto';
 import { UpdateWeatherDto } from './dto/update-weather.dto';
 import { WeatherService } from './weather.service';
-import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('weathers')
+@UseInterceptors(CacheInterceptor)
 export class WeatherController {
   constructor(private readonly weatherService: WeatherService) {}
 

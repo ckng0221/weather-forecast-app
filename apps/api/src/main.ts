@@ -2,8 +2,10 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as compression from 'compression';
 import * as morgan from 'morgan';
 import { AppModule } from './app.module';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const PORT = 8000;
@@ -23,6 +25,8 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, documentFactory);
 
+  app.use(helmet());
+
   // logging
   const loggingMode =
     process.env.NODE_ENV === 'production' ? 'combined' : 'dev';
@@ -31,6 +35,8 @@ async function bootstrap() {
   // Cors
   const allowedOrigin = configService.get('FRONTEND_HOST');
   app.enableCors({ origin: allowedOrigin });
+
+  app.use(compression());
 
   app.disable('x-powered-by');
   await app.listen(PORT);
