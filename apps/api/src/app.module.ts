@@ -1,11 +1,11 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import 'dotenv/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { WeatherModule } from './weather/weather.module';
-import { CacheModule } from '@nestjs/cache-manager';
+import { WeatherModule } from './weather_v1/weather.module';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 

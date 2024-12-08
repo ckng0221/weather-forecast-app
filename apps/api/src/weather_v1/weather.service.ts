@@ -57,12 +57,18 @@ export class WeatherService {
   }
 
   findAll(query: WeatherQuery): any {
+    const date = query.date;
     const startDate = query.startDate;
     const endDate = query.endDate;
 
     // Process query parameters
     let searchQuery = {};
-    if (startDate && endDate) {
+    if (date) {
+      searchQuery = {
+        ...searchQuery,
+        date: new Date(startDate),
+      };
+    } else if (startDate && endDate) {
       searchQuery = {
         ...searchQuery,
         date: {

@@ -43,7 +43,7 @@ export class WeatherService {
       end_date: '',
     }
   ) {
-    const url = `${this.baseUrl}/api/weathers`;
+    const url = `${this.baseUrl}/v1/weathers`;
 
     let params = {};
     params = { ...params };
