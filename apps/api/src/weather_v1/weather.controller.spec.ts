@@ -5,6 +5,7 @@ import { Connection, Model, connect } from 'mongoose';
 import { Weather, WeatherSchema } from './schemas/weather.schema';
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 describe('WeatherController', () => {
   let weatherController: WeatherController;
@@ -23,6 +24,7 @@ describe('WeatherController', () => {
       providers: [
         WeatherService,
         { provide: getModelToken(Weather.name), useValue: weatherModel },
+        { provide: CACHE_MANAGER, useValue: {} },
       ],
     }).compile();
     weatherController = app.get<WeatherController>(WeatherController);
