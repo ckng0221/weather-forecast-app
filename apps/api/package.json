@@ -1,8 +1,8 @@
 {
-  "name": "weather-api",
-  "version": "0.0.1",
+  "name": "weather-forecast-api",
+  "version": "1.0.0",
   "description": "",
-  "author": "",
+  "author": "CK Ng",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
