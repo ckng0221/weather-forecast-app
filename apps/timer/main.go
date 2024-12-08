@@ -21,19 +21,15 @@ func main() {
 	}
 
 	c := cron.New(cron.WithSeconds())
-	if os.Getenv("ENV") == "production" {
-		// once per day
-		c.AddFunc("0 0 0 * * *", job.main)
-	} else {
-		// once per minute
-		c.AddFunc("0 * * * * *", job.main)
+	cronExpression := os.Getenv("TIMER_SCHEDULE")
+	c.AddFunc(cronExpression, job.main)
 
-		// c.AddFunc("*/10 * * * * *", job.main)
-	}
+	// c.AddFunc("*/10 * * * * *", job.main)
 	c.Start()
 	slog.Info("Started cron job...")
+	slog.Info("", "cron", cronExpression)
 
 	select {}
 }
 
-// CompileDaemon -command="./scheduler"
+// CompileDaemon -command="./timer"

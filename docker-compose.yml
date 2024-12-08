@@ -10,6 +10,7 @@ services:
       - ./apps/api/.env
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/weather-forecast
+      - FRONTEND_HOST=http://weather-forecast.127.0.0.1.nip.io
       - PORT=8080
     depends_on:
       - mongodb
@@ -28,13 +29,30 @@ services:
     depends_on:
       - api
 
+  timer:
+    image: weather-forecast-timer
+    build:
+      context: ./apps/timer
+      args:
+        - service=timer
+    env_file:
+      - ./apps/timer/.env
+    environment:
+      - API_BASE_URL=http://api:8080
+      - DEBUG=0
+      - ENV=production
+      - TIMER_SCHEDULE=0 */5 * * * *
+    depends_on:
+      - api
+
   # Dependencies
   mongodb:
     image: mongo:6
     volumes:
       - mongodb_data_container:/data/db
-    ports:
-      - "27017:27017"
+    # Do not expose port
+    # ports:
+    #   - "27017:27017"
 
 volumes:
   mongodb_data_container:
