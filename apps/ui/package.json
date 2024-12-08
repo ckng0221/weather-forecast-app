@@ -1,6 +1,6 @@
 {
   "name": "weather-forecast-ui",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "CK Ng",
   "scripts": {
     "ng": "ng",

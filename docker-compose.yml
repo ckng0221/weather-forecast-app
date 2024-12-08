@@ -1,0 +1,55 @@
+services:
+  # app services
+  api:
+    image: weather-forecast-api
+    build:
+      context: ./apps/api
+      args:
+        - service=api
+    env_file:
+      - ./apps/api/.env
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/weather-forecast
+      - PORT=8080
+    depends_on:
+      - mongodb
+    ports:
+      - "8080:8080"
+    networks:
+      - node-network
+    restart: "always"
+    links:
+      - mongodb
+
+  # ui:
+  #   image: weather-forecast-ui
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/ui/Dockerfile
+  #     args:
+  #       - VITE_BACKEND_BASE_URL=http://weather-forecast.127.0.0.1.nip.io/api
+  #   ports:
+  #     - 80:80
+  #   networks:
+  #     - api
+  #   depends_on:
+  #     - api
+
+  # Dependencies
+  mongodb:
+    image: mongo:6
+    volumes:
+      - mongodb_data_container:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - node-network
+
+volumes:
+  mongodb_data_container:
+networks:
+  node-network:
+    driver: bridge
+# docker compose up -d
+# docker compose up -d --build
+# docker compose down
