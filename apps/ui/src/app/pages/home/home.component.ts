@@ -16,14 +16,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import dayjs from 'dayjs';
 import { catchError } from 'rxjs';
+import { DatebarComponent } from '../../components/datebar/datebar.component';
 import { IWeather } from '../../model/weather.type';
 import { WeatherLocationPipe } from '../../pipes/weather-location.pipe';
 import { WeatherTranslatePipe } from '../../pipes/weather-translate.pipe';
-import { WeatherService } from '../../services/weather.service';
-import { DatebarComponent } from '../../components/datebar/datebar.component';
 import { DateService } from '../../services/date.service';
+import { WeatherService } from '../../services/weather.service';
 
 @Component({
   selector: 'app-home',
@@ -71,7 +70,7 @@ export class HomeComponent {
 
   currentLocation = signal('');
 
-  todayDate = dayjs().format('YYYY-MM-DD');
+  todayDate = new Date().toISOString().slice(0, 10);
   currentDate: WritableSignal<string> = signal(
     this.dateService.getCurrentDate()
   );
