@@ -41,3 +41,12 @@ jobs:
       - run: make install_all
       - run: make test_all
       - run: make build_all
+
+  build-image:
+    name: build-image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: touch ./apps/timer/.env
+      - run: docker compose -f docker-compose.yml build
