@@ -1,9 +1,10 @@
 package utils
 
 import (
-	"fmt"
 	"log"
 	"os"
+
+	"log/slog"
 
 	"github.com/joho/godotenv"
 )
@@ -11,7 +12,7 @@ import (
 func LoadEnv(requiredEnv []string) {
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Println("failed to load .env file")
+		slog.Warn("failed to load .env file")
 	}
 	for _, envName := range requiredEnv {
 		env := os.Getenv(envName)

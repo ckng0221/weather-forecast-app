@@ -10,7 +10,7 @@ import { AppModule } from './app.module';
 import { WeatherModule as WeatherModule_V1 } from './weather_v1/weather.module';
 
 async function bootstrap() {
-  const PORT = 8000;
+  const PORT = process.env.PORT || 8000;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const configService = app.get(ConfigService);

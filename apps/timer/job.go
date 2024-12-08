@@ -87,10 +87,10 @@ func (j *Job) retriveData() error {
 }
 
 func (j *Job) updateData() error {
-	slog.Info("Updating data to database...")
-
 	baseUrl := os.Getenv("API_BASE_URL")
-	endpoint := fmt.Sprintf("%s/api/weathers", baseUrl)
+	endpoint := fmt.Sprintf("%s/v1/weathers", baseUrl)
+	slog.Info("Publishing data to backend API server...")
+	slog.Info("API", "endpoint", endpoint)
 
 	for _, forecast := range j.data {
 		identifier := fmt.Sprintf("%s_%s", forecast.Date, forecast.Location.LocationID)
