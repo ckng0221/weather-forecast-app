@@ -15,25 +15,18 @@ services:
       - mongodb
     ports:
       - "8080:8080"
-    networks:
-      - node-network
     restart: "always"
     links:
       - mongodb
 
-  # ui:
-  #   image: weather-forecast-ui
-  #   build:
-  #     context: .
-  #     dockerfile: ./apps/ui/Dockerfile
-  #     args:
-  #       - VITE_BACKEND_BASE_URL=http://weather-forecast.127.0.0.1.nip.io/api
-  #   ports:
-  #     - 80:80
-  #   networks:
-  #     - api
-  #   depends_on:
-  #     - api
+  ui:
+    image: weather-forecast-ui
+    build:
+      context: ./apps/ui
+    ports:
+      - 80:80
+    depends_on:
+      - api
 
   # Dependencies
   mongodb:
@@ -42,8 +35,6 @@ services:
       - mongodb_data_container:/data/db
     ports:
       - "27017:27017"
-    networks:
-      - node-network
 
 volumes:
   mongodb_data_container:

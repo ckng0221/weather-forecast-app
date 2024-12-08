@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IIpInfo, IWeather } from '../model/weather.type';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { BehaviorSubject, catchError } from 'rxjs';
 @Injectable({
   providedIn: 'root',
