@@ -11,9 +11,11 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { HeaderApiKeyAuthGuard } from '../auth/httpapikey-auth.guard';
 import { CreateWeatherDto } from './dto/create-weather.dto';
 import { ReadWeatherDto, WeatherQuery } from './dto/read-weather.dto';
 import { UpdateWeatherDto } from './dto/update-weather.dto';
@@ -26,11 +28,13 @@ export class WeatherController {
   constructor(private readonly weatherService: WeatherService) {}
 
   @Post('weathers')
+  @UseGuards(HeaderApiKeyAuthGuard)
   create(@Body() createWeatherDto: CreateWeatherDto) {
     return this.weatherService.create(createWeatherDto);
   }
 
   @Put('weathers')
+  @UseGuards(HeaderApiKeyAuthGuard)
   createOrUpdate(@Body() createWeatherDto: CreateWeatherDto) {
     return this.weatherService.createOrUpdate(createWeatherDto);
   }

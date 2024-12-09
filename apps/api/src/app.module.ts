@@ -6,6 +6,7 @@ import 'dotenv/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { WeatherModule } from './weather_v1/weather.module';
+import { AuthModule } from './auth/auth.module';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -17,6 +18,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
     }),
     MongooseModule.forRoot(MONGODB_URI),
     CacheModule.register({ isGlobal: true, ttl: 60000 }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
