@@ -9,12 +9,12 @@ import (
 )
 
 func init() {
-	requiredEnv := []string{"API_BASE_URL", "WEATHER_FORECAST_URL"}
+	requiredEnv := []string{"API_BASE_URL", "WEATHER_FORECAST_URL", "API_KEY"}
 	utils.LoadEnv(requiredEnv)
 }
 
 func main() {
-	job := &Job{}
+	job := &Job{apiKey: os.Getenv("API_KEY")}
 
 	if os.Getenv("DEBUG") == "1" {
 		slog.SetLogLoggerLevel(slog.LevelDebug)

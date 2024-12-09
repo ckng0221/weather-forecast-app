@@ -28,7 +28,8 @@ type Location struct {
 }
 
 type Job struct {
-	data []Forecast
+	data   []Forecast
+	apiKey string
 }
 
 func (j *Job) main() {
@@ -106,6 +107,7 @@ func (j *Job) updateData() error {
 			return err
 		}
 		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("x-api-key", j.apiKey)
 
 		client := &http.Client{}
 		resp, err := client.Do(req)
@@ -114,6 +116,11 @@ func (j *Job) updateData() error {
 			return err
 		}
 		defer resp.Body.Close()
+		if resp.StatusCode != 200 {
+			slog.Error(fmt.Sprintf("Request error for %s\n", identifier), "status code", resp.StatusCode)
+
+			continue
+		}
 
 		slog.Debug(fmt.Sprintf("Updated data for %s\n", identifier))
 	}

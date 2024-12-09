@@ -41,6 +41,7 @@ async function bootstrap() {
       .setTitle('Weather Forecast API')
       .setDescription('API endpoints')
       .setVersion('1.0')
+      .addApiKey({ name: 'x-api-key', type: 'apiKey' }, 'Api-Key')
       .build();
 
     const documentFactoryV1 = () =>
