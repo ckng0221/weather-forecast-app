@@ -51,3 +51,12 @@ build_ui:
 build_timer:
 	cd apps/timer && \
 	go build .
+
+
+# Docker
+run_docker:
+	docker compose up -d
+
+stop_docker:
+	docker compose down
+
