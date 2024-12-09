@@ -14,7 +14,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { HeaderApiKeyAuthGuard } from '../auth/httpapikey-auth.guard';
 import { CreateWeatherDto } from './dto/create-weather.dto';
 import { ReadWeatherDto, WeatherQuery } from './dto/read-weather.dto';
@@ -22,24 +22,26 @@ import { UpdateWeatherDto } from './dto/update-weather.dto';
 import { WeatherService } from './weather.service';
 
 @ApiTags('Weather')
-@Controller({ version: '1' })
+@Controller({ path: 'weathers', version: '1' })
 @UseInterceptors(CacheInterceptor)
 export class WeatherController {
   constructor(private readonly weatherService: WeatherService) {}
 
-  @Post('weathers')
+  @ApiSecurity('Api-Key')
+  @Post()
   @UseGuards(HeaderApiKeyAuthGuard)
   create(@Body() createWeatherDto: CreateWeatherDto) {
     return this.weatherService.create(createWeatherDto);
   }
 
-  @Put('weathers')
+  @ApiSecurity('Api-Key')
+  @Put()
   @UseGuards(HeaderApiKeyAuthGuard)
   createOrUpdate(@Body() createWeatherDto: CreateWeatherDto) {
     return this.weatherService.createOrUpdate(createWeatherDto);
   }
 
-  @Get('weathers')
+  @Get()
   @ApiQuery({
     name: 'identifier',
     example: '2024-01-01_Ds001',
@@ -54,17 +56,19 @@ export class WeatherController {
     return this.weatherService.findAll(query);
   }
 
-  @Get('weathers/:id')
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.weatherService.findOne(id);
   }
 
-  @Patch('weathers/:id')
+  @ApiSecurity('Api-Key')
+  @Patch(':id')
   update(@Param('id') id: string, @Body() updateWeatherDto: UpdateWeatherDto) {
     return this.weatherService.update(id, updateWeatherDto);
   }
 
-  @Delete('weathers/:id')
+  @ApiSecurity('Api-Key')
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
     return this.weatherService.remove(id);
