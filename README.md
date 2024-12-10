@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/ckng0221/weather-forecast-app/actions/workflows/ci.yml/badge.svg)](https://github.com/ckng0221/weather-forecast-app/actions/workflows/ci.yml)
 
-Weather Forecast App is a proof of concept (POC) weather forecast web application written in [TypeScript](https://www.typescriptlang.org/) and [Go](https://go.dev/). The application currently provides weather forecast information in major location in Malaysia (API v1).
+Weather Forecast App is a web application written in [TypeScript](https://www.typescriptlang.org/) and [Go](https://go.dev/). The application currently provides weather forecast information in major location in Malaysia (API v1). The API is versioned and can be served independently as a public API to provide weather forecast data.
 
 - `API`: The backend application server with REST API endpoints.
 - `UI`: The UI of the application.
